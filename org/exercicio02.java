@@ -1,40 +1,46 @@
 package desafioJava.org;
 
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+/*Questão 02 - Fazer Senha*/
+public class Exercicio02 {
+	
+	public void questaoDois(String senha) {
 
-public class exercicio02 {
+        final int TAMANHO_MINIMO = 6;
 
-	   public static boolean validaSenha(String senha) {
-
-	        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-+])(?=\\S+$).{6}$";
-
-	        Pattern p = Pattern.compile(regex);
-
-	        if (senha == null) {
-	            return false;
-	        }
-
-	        Matcher m = p.matcher(senha);
-
-	        return m.matches();
-	    }
-
-	    public static void main(String[] args) {
-
-	        Scanner inserir = new Scanner(System.in);
-
-	        System.out.printf("Nome: ");
-	        String nome = inserir.next();
-	        
-	        System.out.println("\nSenha: ");
-	        String senha = inserir.next();
+        if (isValido(senha)) {
+            System.out.println("\nSenha forte!");
+        } else {
+            int aux = TAMANHO_MINIMO - senha.length();
+            if (aux >= 0) {
+                System.out.println(aux);
+            } else {
+                System.out.println("\nSenha fraca!");
+            }
+        }
+    }
 
 
+    private boolean isValido(String senha) {
 
-	        System.out.println(validaSenha(senha));
-	    }
+        if (senha.length() < 6) return false;
 
+        boolean minusculo = false;
+        boolean maiusculo = false;
+        boolean numero = false;
+        boolean simbolo = false;
+
+        for (char aux : senha.toCharArray()) {
+            if (aux >= '0' && aux <= '9') {
+                numero = true;
+            } else if (aux >= 'A' && aux <= 'Z') {
+                maiusculo = true;
+            } else if (aux >= 'a' && aux <= 'z') {
+                minusculo = true;
+            } else {
+                simbolo = true;
+            }
+        }
+        return numero && maiusculo && minusculo && simbolo;
+    }
 
 }
